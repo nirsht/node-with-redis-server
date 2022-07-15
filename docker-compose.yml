@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: redis
+    expose:
+     - 6379
+
+  app:
+    build: ./
+    volumes:
+      - ./:/var/www/app
+    ports:
+      - 3005:3005
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=development
+      - PORT=3005
+    command:
+      sh -c "npm i & node server.js"
